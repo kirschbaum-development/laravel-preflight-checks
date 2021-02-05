@@ -26,7 +26,10 @@ class PreflightCheckCommandTest extends TestCase
      */
     public function testPerformsPreflightChecks(array $config, int $expectedExitCode)
     {
-        App::detectEnvironment(fn () => 'banana');
+        App::detectEnvironment(function () {
+            return 'banana';
+        });
+
         config(['preflight.checks.banana' => $config]);
 
         $this->artisan('preflight:check')
@@ -65,7 +68,9 @@ class PreflightCheckCommandTest extends TestCase
      */
     public function testThrowsErrorIfNoConfig()
     {
-        App::detectEnvironment(fn () => 'banana');
+        App::detectEnvironment(function () {
+            return 'banana';
+        });
 
         $configMock = Mockery::mock(Repository::class)->makePartial();
         $configMock->shouldReceive('has')
@@ -82,7 +87,9 @@ class PreflightCheckCommandTest extends TestCase
      */
     public function testEnvironmentIsCaseInsensitive()
     {
-        App::detectEnvironment(fn () => 'BaNaNa');
+        App::detectEnvironment(function () {
+            return 'BaNaNa';
+        });
         config(['preflight.checks.banana' => [PassedCheck::class]]);
 
         // No exception thrown

@@ -15,7 +15,7 @@ abstract class BasePreflightCheckTest extends TestCase
     /**
      * @psalm-var class-string
      */
-    protected string $preflightCheckClass;
+    protected $preflightCheckClass;
 
     protected PreflightCheck $preflightCheck;
 

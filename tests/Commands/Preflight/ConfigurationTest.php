@@ -7,7 +7,7 @@ use Kirschbaum\PreflightChecks\Commands\Preflight\Result;
 
 class ConfigurationTest extends BasePreflightCheckTest
 {
-    protected string $preflightCheckClass = Configuration::class;
+    protected $preflightCheckClass = Configuration::class;
 
     protected function setUp(): void
     {

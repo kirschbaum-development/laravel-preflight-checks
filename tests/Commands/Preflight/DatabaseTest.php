@@ -13,7 +13,7 @@ use PDOException;
 
 class DatabaseTest extends BasePreflightCheckTest
 {
-    protected string $preflightCheckClass = Database::class;
+    protected $preflightCheckClass = Database::class;
 
     /**
      * @test

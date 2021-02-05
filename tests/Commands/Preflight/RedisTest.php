@@ -10,7 +10,7 @@ use Mockery;
 
 class RedisTest extends BasePreflightCheckTest
 {
-    protected string $preflightCheckClass = Redis::class;
+    protected $preflightCheckClass = Redis::class;
 
     /**
      * @test
