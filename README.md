@@ -89,6 +89,34 @@ The accepted options for the `Configuration` preflight check is a list of config
 ]
 ```
 
+### Write Your Own!
+
+If you have a special startup consideration you'd like to make, feel free write your own check, extending `Kirschbaum\PreflightChecks\Commands\Preflight\PreflightCheck`.
+
+Specify any necessary config keys on the `$requiredConfig` property.
+
+Implement the `check` method, which should perform your check and mark the `$result` as pass/fail.
+
+Example:
+
+```php
+/**
+ * Performs the preflight check.
+ *
+ * This method should set a pass/fail on the result.
+ */
+public function check(Result $result): Result
+{
+    try {
+        // Check something is up/ready/willing/etc
+    } catch (Exception $e) {
+        return $result->fail($e->getMessage(), $e);
+    }
+
+    return $result->pass('Woohoo! It didn\'t fail!', $dataFromTheCheck);
+}
+```
+
 ## Usage
 
 Basic usage is via the Artisan command:
