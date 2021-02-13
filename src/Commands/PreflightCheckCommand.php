@@ -5,6 +5,7 @@ namespace Kirschbaum\PreflightChecks\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
+use InvalidArgumentException;
 use Kirschbaum\PreflightChecks\Commands\Preflight\Exceptions\NoPreflightChecksDefinedException;
 use Kirschbaum\PreflightChecks\Commands\Preflight\PreflightCheck;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -92,7 +93,12 @@ class PreflightCheckCommand extends Command
     {
         $environment = strtolower(App::environment());
 
-        if (! config()->has("preflight.checks.{$environment}")) {
+        try {
+            if (! config()->has("preflight.checks.{$environment}")) {
+                throw new NoPreflightChecksDefinedException("No preflight checks defined for this environment ({$environment})!");
+            }
+        } catch (InvalidArgumentException $exception) {
+            // Catch for Laravel 6.x
             throw new NoPreflightChecksDefinedException("No preflight checks defined for this environment ({$environment})!");
         }
 
