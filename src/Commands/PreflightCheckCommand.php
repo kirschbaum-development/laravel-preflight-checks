@@ -19,7 +19,7 @@ class PreflightCheckCommand extends Command
      */
     protected $signature = 'preflight:check
                             {--only-show-failures : Hides output from passing checks only show errors (incompatible with verbose)}
-                            {--env';
+                            ';
 
     /**
      * The console command description.
