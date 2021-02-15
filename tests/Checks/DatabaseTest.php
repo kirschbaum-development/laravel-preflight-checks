@@ -1,12 +1,12 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
+namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
 use Doctrine\DBAL\Driver\PDO\Exception;
 use Doctrine\DBAL\Driver\PDOConnection;
 use Illuminate\Support\Facades\DB;
-use Kirschbaum\PreflightChecks\Preflight\Database;
-use Kirschbaum\PreflightChecks\Preflight\Result;
+use Kirschbaum\PreflightChecks\Checks\Database;
+use Kirschbaum\PreflightChecks\Checks\Result;
 use Mockery;
 use PDO;
 use PDOException;

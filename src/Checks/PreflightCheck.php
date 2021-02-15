@@ -1,6 +1,6 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Preflight;
+namespace Kirschbaum\PreflightChecks\Checks;
 
 use Illuminate\Support\Collection;
 

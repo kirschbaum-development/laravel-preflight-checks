@@ -1,8 +1,8 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
+namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
-use Kirschbaum\PreflightChecks\Preflight\Result;
+use Kirschbaum\PreflightChecks\Checks\Result;
 use PHPUnit\Framework\TestCase;
 
 class ResultTest extends TestCase

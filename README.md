@@ -39,7 +39,7 @@ return [
         ],
 
         'anyEnvironmentName' => [
-            // Any class(es) extending Kirschbaum\PreflightChecks\Commands\Preflight\PreflightCheck::class
+            // Any class(es) extending Kirschbaum\PreflightChecks\Checks\PreflightCheck::class
         ],
 
         // ...
@@ -61,7 +61,7 @@ Every check can be specified with options, for example:
 
 ### Database
 
-`Kirschbaum\PreflightChecks\Preflight\Database`
+`Kirschbaum\PreflightChecks\Checks\Database`
 
 Checks that the database connection can be established, via the PDO, and that the required config keys are set. It outputs some server info and version information.
 
@@ -71,7 +71,7 @@ Checks that the database connection can be established, via the PDO, and that th
 
 ### Redis
 
-`Kirschbaum\PreflightChecks\Preflight\Redis`
+`Kirschbaum\PreflightChecks\Checks\Redis`
 
 Checks that Redis connection can be established, and that the required config keys are set.
 
@@ -79,7 +79,7 @@ Checks that Redis connection can be established, and that the required config ke
 
 ### Configuration
 
-`Kirschbaum\PreflightChecks\Preflight\Configuration`
+`Kirschbaum\PreflightChecks\Checks\Configuration`
 
 Checks that the specified config keys are set. This checks the `config` values, NOT the `env` values to ensure that in higher environments the correct detection is taking place. As such, make sure to specify the same keys you'd use for `config(...)`.
 
@@ -97,7 +97,7 @@ The accepted options for the `Configuration` preflight check is a list of config
 
 ### Write Your Own!
 
-If you have a special startup consideration you'd like to make, feel free write your own check, extending `Kirschbaum\PreflightChecks\Preflight\PreflightCheck`.
+If you have a special startup consideration you'd like to make, feel free write your own check, extending `Kirschbaum\PreflightChecks\Checks\PreflightCheck`.
 
 Specify any necessary config keys on the `$requiredConfig` property.
 

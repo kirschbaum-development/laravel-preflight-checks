@@ -1,11 +1,11 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
+namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
 use Illuminate\Redis\Connections\Connection;
 use Illuminate\Support\Facades\Redis as RedisFacade;
-use Kirschbaum\PreflightChecks\Preflight\Redis;
-use Kirschbaum\PreflightChecks\Preflight\Result;
+use Kirschbaum\PreflightChecks\Checks\Redis;
+use Kirschbaum\PreflightChecks\Checks\Result;
 use Mockery;
 
 class RedisTest extends BasePreflightCheckTest

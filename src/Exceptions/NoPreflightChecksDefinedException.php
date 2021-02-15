@@ -1,6 +1,6 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Preflight\Exceptions;
+namespace Kirschbaum\PreflightChecks\Exceptions;
 
 use Exception;
 

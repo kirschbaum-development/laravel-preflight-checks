@@ -4,12 +4,12 @@ namespace Kirschbaum\PreflightChecks\Tests\Commands;
 
 use Illuminate\Config\Repository;
 use Illuminate\Support\Facades\App;
-use Kirschbaum\PreflightChecks\Preflight\Exceptions\NoPreflightChecksDefinedException;
+use Kirschbaum\PreflightChecks\Checks\Exceptions\NoPreflightChecksDefinedException;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
-use Kirschbaum\PreflightChecks\Tests\Commands\Preflight\Fixtures\FailedCheck;
-use Kirschbaum\PreflightChecks\Tests\Commands\Preflight\Fixtures\PassedCheck;
-use Kirschbaum\PreflightChecks\Tests\Commands\Preflight\Fixtures\SkippedCheck;
-use Kirschbaum\PreflightChecks\Tests\Commands\Preflight\Fixtures\SkippedFailedCheck;
+use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\FailedCheck;
+use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\PassedCheck;
+use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\SkippedCheck;
+use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\SkippedFailedCheck;
 use Mockery;
 use Orchestra\Testbench\TestCase;
 

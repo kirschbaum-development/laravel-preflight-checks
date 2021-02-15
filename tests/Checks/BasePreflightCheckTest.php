@@ -1,9 +1,9 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
+namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
-use Kirschbaum\PreflightChecks\Preflight\PreflightCheck;
-use Kirschbaum\PreflightChecks\Preflight\Result;
+use Kirschbaum\PreflightChecks\Checks\PreflightCheck;
+use Kirschbaum\PreflightChecks\Checks\Result;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
 use Kirschbaum\PreflightChecks\Tests\Helpers\CanAccessProtected;
 use Orchestra\Testbench\TestCase;

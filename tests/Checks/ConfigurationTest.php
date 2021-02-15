@@ -1,9 +1,9 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
+namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
-use Kirschbaum\PreflightChecks\Preflight\Configuration;
-use Kirschbaum\PreflightChecks\Preflight\Result;
+use Kirschbaum\PreflightChecks\Checks\Configuration;
+use Kirschbaum\PreflightChecks\Checks\Result;
 
 class ConfigurationTest extends BasePreflightCheckTest
 {

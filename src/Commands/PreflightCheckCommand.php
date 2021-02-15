@@ -6,8 +6,8 @@ use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\App;
 use InvalidArgumentException;
-use Kirschbaum\PreflightChecks\Preflight\Exceptions\NoPreflightChecksDefinedException;
-use Kirschbaum\PreflightChecks\Preflight\PreflightCheck;
+use Kirschbaum\PreflightChecks\Checks\Exceptions\NoPreflightChecksDefinedException;
+use Kirschbaum\PreflightChecks\Checks\PreflightCheck;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class PreflightCheckCommand extends Command

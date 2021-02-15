@@ -1,9 +1,9 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight\Fixtures;
+namespace Kirschbaum\PreflightChecks\Tests\Checks\Fixtures;
 
-use Kirschbaum\PreflightChecks\Preflight\PreflightCheck;
-use Kirschbaum\PreflightChecks\Preflight\Result;
+use Kirschbaum\PreflightChecks\Checks\PreflightCheck;
+use Kirschbaum\PreflightChecks\Checks\Result;
 
 class SkippedCheck extends PreflightCheck
 {
