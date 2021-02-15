@@ -1,6 +1,6 @@
 <?php
 
-namespace Kirschbaum\PreflightChecks\Commands\Preflight;
+namespace Kirschbaum\PreflightChecks\Preflight;
 
 use Doctrine\DBAL\Driver\PDO\Exception;
 use Illuminate\Support\Facades\DB;

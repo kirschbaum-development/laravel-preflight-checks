@@ -2,7 +2,7 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
 
-use Kirschbaum\PreflightChecks\Commands\Preflight\Result;
+use Kirschbaum\PreflightChecks\Preflight\Result;
 use PHPUnit\Framework\TestCase;
 
 class ResultTest extends TestCase

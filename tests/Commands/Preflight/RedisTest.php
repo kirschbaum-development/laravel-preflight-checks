@@ -4,8 +4,8 @@ namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
 
 use Illuminate\Redis\Connections\Connection;
 use Illuminate\Support\Facades\Redis as RedisFacade;
-use Kirschbaum\PreflightChecks\Commands\Preflight\Redis;
-use Kirschbaum\PreflightChecks\Commands\Preflight\Result;
+use Kirschbaum\PreflightChecks\Preflight\Redis;
+use Kirschbaum\PreflightChecks\Preflight\Result;
 use Mockery;
 
 class RedisTest extends BasePreflightCheckTest

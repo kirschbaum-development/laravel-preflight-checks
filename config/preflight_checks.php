@@ -1,8 +1,8 @@
 <?php
 
-use Kirschbaum\PreflightChecks\Commands\Preflight\Configuration;
-use Kirschbaum\PreflightChecks\Commands\Preflight\Database;
-use Kirschbaum\PreflightChecks\Commands\Preflight\Redis;
+use Kirschbaum\PreflightChecks\Preflight\Configuration;
+use Kirschbaum\PreflightChecks\Preflight\Database;
+use Kirschbaum\PreflightChecks\Preflight\Redis;
 
 return [
     'checks' => [

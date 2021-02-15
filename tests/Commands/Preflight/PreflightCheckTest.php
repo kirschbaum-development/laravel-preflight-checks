@@ -2,8 +2,8 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
 
-use Kirschbaum\PreflightChecks\Commands\Preflight\PreflightCheck;
-use Kirschbaum\PreflightChecks\Commands\Preflight\Result;
+use Kirschbaum\PreflightChecks\Preflight\PreflightCheck;
+use Kirschbaum\PreflightChecks\Preflight\Result;
 use Orchestra\Testbench\TestCase;
 
 class PreflightCheckTest extends TestCase

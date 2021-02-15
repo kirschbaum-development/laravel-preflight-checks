@@ -2,8 +2,8 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
 
-use Kirschbaum\PreflightChecks\Commands\Preflight\Configuration;
-use Kirschbaum\PreflightChecks\Commands\Preflight\Result;
+use Kirschbaum\PreflightChecks\Preflight\Configuration;
+use Kirschbaum\PreflightChecks\Preflight\Result;
 
 class ConfigurationTest extends BasePreflightCheckTest
 {

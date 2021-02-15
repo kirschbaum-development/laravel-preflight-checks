@@ -4,7 +4,7 @@ namespace Kirschbaum\PreflightChecks\Tests\Commands;
 
 use Illuminate\Config\Repository;
 use Illuminate\Support\Facades\App;
-use Kirschbaum\PreflightChecks\Commands\Preflight\Exceptions\NoPreflightChecksDefinedException;
+use Kirschbaum\PreflightChecks\Preflight\Exceptions\NoPreflightChecksDefinedException;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
 use Kirschbaum\PreflightChecks\Tests\Commands\Preflight\Fixtures\FailedCheck;
 use Kirschbaum\PreflightChecks\Tests\Commands\Preflight\Fixtures\PassedCheck;

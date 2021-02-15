@@ -2,8 +2,8 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Commands\Preflight;
 
-use Kirschbaum\PreflightChecks\Commands\Preflight\PreflightCheck;
-use Kirschbaum\PreflightChecks\Commands\Preflight\Result;
+use Kirschbaum\PreflightChecks\Preflight\PreflightCheck;
+use Kirschbaum\PreflightChecks\Preflight\Result;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
 use Kirschbaum\PreflightChecks\Tests\Helpers\CanAccessProtected;
 use Orchestra\Testbench\TestCase;
