@@ -13,7 +13,7 @@ class PreflightChecksServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/preflight_checks.php' => $this->publishPath('preflight_checks.php'),
+            __DIR__ . '/../config/preflight.php' => $this->publishPath('preflight.php'),
         ]);
 
         if ($this->app->runningInConsole()) {
@@ -29,8 +29,8 @@ class PreflightChecksServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/preflight_checks.php',
-            'preflight_checks'
+            __DIR__ . '/../config/preflight.php',
+            'preflight'
         );
     }
 
