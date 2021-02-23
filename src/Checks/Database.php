@@ -30,7 +30,9 @@ class Database extends PreflightCheck
             $attributes[$attribute] = $pdo->getAttribute(constant("PDO::ATTR_${attribute}"));
         }
 
-        return $result->pass('Connected to DB', $attributes);
+        $connection = $this->getConnection();
+
+        return $result->pass("Connected to DB (Connection: ${connection})", $attributes);
     }
 
     /**
