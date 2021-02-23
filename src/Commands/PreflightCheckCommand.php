@@ -108,6 +108,11 @@ class PreflightCheckCommand extends Command
                 $options = [];
             }
 
+            if (is_array($options) && array_key_exists('check', $options)) {
+                $class = $options['check'];
+                $options = $options['options'] ?? [];
+            }
+
             $this->preflightSteps[] = App::makeWith($class, compact('options'));
         }
     }

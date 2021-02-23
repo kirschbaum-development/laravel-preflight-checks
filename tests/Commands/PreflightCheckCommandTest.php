@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\App;
 use Kirschbaum\PreflightChecks\Checks\Exceptions\NoPreflightChecksDefinedException;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\FailedCheck;
+use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\OptionsCheck;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\PassedCheck;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\SkippedCheck;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\SkippedFailedCheck;
@@ -57,6 +58,43 @@ class PreflightCheckCommandTest extends TestCase
             ],
             'Passes with mix of failed skipped' => [
                 [PassedCheck::class, SkippedFailedCheck::class], 0,
+            ],
+            'Provides options and passes' => [
+                [
+                    OptionsCheck::class => ['pass' => true],
+                ], 0,
+            ],
+            'Provides options and fails' => [
+                [
+                    OptionsCheck::class => ['pass' => false],
+                ], 1,
+            ],
+            'Can pass full config without options' => [
+                [
+                    [
+                        'check' => PassedCheck::class,
+                    ],
+                ], 0,
+            ],
+            'Can fail full config with options' => [
+                [
+                    [
+                        'check' => OptionsCheck::class,
+                        'options' => ['pass' => false],
+                    ],
+                ], 1,
+            ],
+            'Full config allows duplicates' => [
+                [
+                    [
+                        'check' => OptionsCheck::class,
+                        'options' => ['pass' => false],
+                    ],
+                    [
+                        'check' => OptionsCheck::class,
+                        'options' => ['pass' => true],
+                    ],
+                ], 1,
             ],
         ];
     }
