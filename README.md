@@ -57,6 +57,21 @@ Every check can be specified with options, for example:
 ]
 ```
 
+Or with the fully explicit syntax:
+
+```php
+'production' => [
+    [
+        'check' => Database::class,
+        'options' => [
+            'connection' => 'db2'
+        ]
+    ],
+]
+```
+
+If you need to repeat checks (for example, when using multiple database connections), you will need to use the full syntax.
+
 ## Available Checks
 
 ### Database
@@ -167,6 +182,10 @@ php artisan optimize
 php artisan preflight:check -v
 php-fpm
 ```
+
+### Local Environment
+
+The `preflight:check` command can also provide a concrete method of assuring all the appropriate environment configuration has taken place. This can be especially helpful when bringing on new developers, as simply running `php artisan preflight:check` can give them a good indication of what's left to setup/configure before their environment is live.
 
 ## Contributing
 
