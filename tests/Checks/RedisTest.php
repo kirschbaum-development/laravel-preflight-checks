@@ -31,7 +31,8 @@ class RedisTest extends BasePreflightCheckTest
         $mockConnection->shouldReceive('getName')->once()->andReturn($connectionName);
         $mockConnection->shouldReceive('client->info')->once()->andReturn($connectionInfo);
 
-        $result = $this->preflightCheck->check(new Result('Test\Test'));
+        $preflightCheck = new $this->preflightCheckClass();
+        $result = $preflightCheck->check(new Result('Test\Test'));
 
         $this->assertPassed($result);
         $resultData = $result->getRawData();
@@ -49,7 +50,8 @@ class RedisTest extends BasePreflightCheckTest
             ->once()
             ->andThrow(\Exception::class);
 
-        $result = $this->preflightCheck->check(new Result('Test\Test'));
+        $preflightCheck = new $this->preflightCheckClass();
+        $result = $preflightCheck->check(new Result('Test\Test'));
 
         $this->assertFailed($result);
     }
@@ -70,8 +72,17 @@ class RedisTest extends BasePreflightCheckTest
         $mockConnection->shouldNotReceive('getName');
         $mockConnection->shouldNotReceive('client->info');
 
-        $result = $this->preflightCheck->check(new Result('Test\Test'));
+        $preflightCheck = new $this->preflightCheckClass();
+        $result = $preflightCheck->check(new Result('Test\Test'));
 
         $this->assertFailed($result);
+    }
+
+    /**
+     * @test
+     */
+    public function testChecksConfigValues()
+    {
+        $this->checkConfigValues(new $this->preflightCheckClass());
     }
 }

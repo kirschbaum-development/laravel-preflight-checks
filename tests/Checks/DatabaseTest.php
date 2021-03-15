@@ -15,13 +15,32 @@ class DatabaseTest extends BasePreflightCheckTest
 {
     protected $preflightCheckClass = Database::class;
 
+    private const TEST_DEFAULT_DB_CONNECTION = 'test_default';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config(['database.default' => static::TEST_DEFAULT_DB_CONNECTION]);
+    }
+
     /**
      * @test
+     * @dataProvider providesDatabaseScenarios
      */
-    public function testChecksDatabaseAccessible()
+    public function testChecksDatabaseAccessible(?array $options, string $expectedConnection)
     {
         $mockPdo = Mockery::mock(PDOConnection::class);
-        DB::shouldReceive('getPdo')->once()->andReturn($mockPdo);
+        DB::shouldReceive('connection')
+            ->once()
+            ->with($expectedConnection)
+            ->andReturn(
+                Mockery::mock(Connection::class)
+                    ->shouldReceive('getPdo')
+                    ->once()
+                    ->andReturn($mockPdo)
+                    ->getMock()
+            );
 
         $attributes = [
             PDO::ATTR_CLIENT_VERSION => 'test-version',
@@ -31,18 +50,64 @@ class DatabaseTest extends BasePreflightCheckTest
         ];
         $mockPdo->shouldReceive('getAttribute')->andReturnUsing(fn ($arg) => $attributes[$arg]);
 
-        $result = $this->preflightCheck->check(new Result('Test\Test'));
+        $preflightCheck = is_null($options) ? new $this->preflightCheckClass : new $this->preflightCheckClass($options);
+        $result = $preflightCheck->check(new Result('Test\Test'));
         $this->assertPassed($result);
+    }
+
+    public function providesDatabaseScenarios()
+    {
+        yield 'No options checks default' => [
+            null,
+            static::TEST_DEFAULT_DB_CONNECTION,
+        ];
+
+        yield 'Empty options checks default' => [
+            [],
+            static::TEST_DEFAULT_DB_CONNECTION,
+        ];
+
+        yield 'Default checks default' => [
+            ['connection' => static::TEST_DEFAULT_DB_CONNECTION],
+            static::TEST_DEFAULT_DB_CONNECTION,
+        ];
+
+        $testConnection = 'test_connection_'.mt_rand(100, 99999);
+
+        yield 'Connection checks connection' => [
+            ['connection' => $testConnection],
+            $testConnection,
+        ];
     }
 
     /**
      * @test
      */
-    public function testChecksDatabaseInAccessible()
+    public function testChecksDatabaseInaccessible()
     {
-        DB::shouldReceive('getPdo')->once()->andThrow(new Exception(Mockery::mock(PDOException::class)));
+        DB::shouldReceive('connection')
+            ->once()
+            ->with(static::TEST_DEFAULT_DB_CONNECTION)
+            ->andReturn(
+                Mockery::mock(Connection::class)
+                    ->shouldReceive('getPdo')
+                    ->once()
+                    ->andThrow(new Exception(Mockery::mock(PDOException::class)))
+                    ->getMock()
+            );
 
-        $result = $this->preflightCheck->check(new Result('Test\Test'));
+        $preflightCheck = new $this->preflightCheckClass();
+        $result = $preflightCheck->check(new Result('Test\Test'));
         $this->assertFailed($result);
+    }
+
+    /**
+     * @test
+     * @dataProvider providesDatabaseScenarios
+     */
+    public function testChecksConfigValues(?array $options, string $expectedConnection)
+    {
+        $preflight = is_null($options) ? new $this->preflightCheckClass : new $this->preflightCheckClass($options);
+        $this->checkConfigValues($preflight);
     }
 }

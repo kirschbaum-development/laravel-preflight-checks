@@ -19,9 +19,11 @@ class Database extends PreflightCheck
     public function check(Result $result): Result
     {
         try {
-            $pdo = DB::getPdo();
+            $pdo = DB::connection($this->getConnection())->getPdo();
         } catch (Exception $e) {
             return $result->fail($e->getMessage(), $e);
+        } catch (\Exception $e) {
+            return $result->fail('General failure: ' . $e->getMessage(), $e);
         }
 
         $attributes = [];
@@ -59,5 +61,13 @@ class Database extends PreflightCheck
     protected function getConnection(): string
     {
         return $this->options['connection'] ?? config('database.default');
+    }
+
+    /**
+     * Gets the message for successful key check.
+     */
+    protected function getConfigPassMessage()
+    {
+        return sprintf('DB Config keys are set! (%s)', $this->getConnection());
     }
 }

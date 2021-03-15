@@ -17,26 +17,14 @@ abstract class BasePreflightCheckTest extends TestCase
      */
     protected $preflightCheckClass;
 
-    protected PreflightCheck $preflightCheck;
-
     protected function getPackageProviders($app)
     {
         return [PreflightChecksServiceProvider::class];
     }
 
-    protected function setUp(): void
+    public function checkConfigValues(PreflightCheck $preflightCheck)
     {
-        parent::setUp();
-
-        $this->preflightCheck = new $this->preflightCheckClass();
-    }
-
-    /**
-     * @test
-     */
-    public function testChecksConfigValues()
-    {
-        $config = $this->getProtectedProperty($this->preflightCheck, 'requiredConfig');
+        $config = $this->getProtectedProperty($preflightCheck, 'requiredConfig');
 
         if (empty($config)) {
             // No config values, so this technically passes.
@@ -44,7 +32,7 @@ abstract class BasePreflightCheckTest extends TestCase
         }
 
         foreach ($config as $configKey) {
-            $this->assertConfigKeyChecked($configKey);
+            $this->assertConfigKeyChecked($preflightCheck, $configKey);
         }
     }
 
@@ -60,13 +48,13 @@ abstract class BasePreflightCheckTest extends TestCase
         $this->assertTrue($result->failed());
     }
 
-    private function assertConfigKeyChecked(string $configKey): void
+    private function assertConfigKeyChecked(PreflightCheck $preflightCheck, string $configKey): void
     {
         $originalValue = config($configKey);
 
         config([$configKey => null]);
 
-        $configResult = $this->invokeMethod($this->preflightCheck, 'checkConfig', [new Result('Test\Config')]);
+        $configResult = $this->invokeMethod($preflightCheck, 'checkConfig', [new Result('Test\Config')]);
         $this->assertTrue(in_array($configKey, $configResult->getRawData()));
 
         config([$configKey => $originalValue]);

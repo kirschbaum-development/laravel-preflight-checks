@@ -115,6 +115,14 @@ abstract class PreflightCheck
             return $result->fail('Missing configuration key(s).', $missingKeys);
         }
 
-        return $result->pass('Config keys are set!', $this->requiredConfig);
+        return $result->pass($this->getConfigPassMessage(), $this->requiredConfig);
+    }
+
+    /**
+     * Gets the message for successful key check.
+     */
+    protected function getConfigPassMessage()
+    {
+        return 'Config keys are set!';
     }
 }
