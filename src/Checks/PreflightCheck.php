@@ -12,6 +12,11 @@ abstract class PreflightCheck
     protected array $requiredConfig = [];
 
     /**
+     * Configuration hints
+     */
+    protected array $configHints = [];
+
+    /**
      * Is this a required step?
      */
     protected bool $required = true;
@@ -23,7 +28,7 @@ abstract class PreflightCheck
 
     public function __construct(array $options = [])
     {
-        $this->options = $options;
+        $this->loadOptions($options);
         $this->boot();
     }
 
@@ -63,6 +68,18 @@ abstract class PreflightCheck
      */
     protected function boot(): void
     {
+    }
+
+    /**
+     * Parses the options
+     */
+    protected function loadOptions(array $options = [])
+    {
+        if (array_key_exists('config_hints', $options)) {
+            $this->configHints = $options['config_hints'];
+            unset($options['config_hints']);
+        }
+        $this->options = $options;
     }
 
     /**
@@ -112,7 +129,10 @@ abstract class PreflightCheck
         }
 
         if (! empty($missingKeys)) {
-            return $result->fail('Missing configuration key(s).', $missingKeys);
+            return $result->fail(
+                $this->getConfigFailMessage($missingKeys),
+                $this->getConfigFailKeyData($missingKeys),
+            );
         }
 
         return $result->pass($this->getConfigPassMessage(), $this->requiredConfig);
@@ -124,5 +144,26 @@ abstract class PreflightCheck
     protected function getConfigPassMessage()
     {
         return 'Config keys are set!';
+    }
+
+    /**
+     * Gets the message for failed key check.
+     */
+    protected function getConfigFailMessage(array $missingKeys = [])
+    {
+        return 'Missing configuration key(s).';
+    }
+
+    /**
+     * Gets the key data for missing keys.
+     */
+    protected function getConfigFailKeyData(array $missingKeys = [])
+    {
+        return array_map(function ($key) {
+            return array_filter([
+                'key' => $key,
+                'hint' => $this->configHints[$key] ?? null,
+            ]);
+        }, $missingKeys);
     }
 }

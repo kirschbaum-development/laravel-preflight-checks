@@ -157,4 +157,28 @@ class PreflightCheckTest extends TestCase
         $this->assertTrue($report[1]->required());
         $this->assertFalse($report[1]->skipped());
     }
+
+    /**
+     * @test
+     */
+    public function testLoadsConfigHintsFromOptions()
+    {
+        $hints = ['banana' => 'a fruit', 'cucumber' => 'a vegetable'];
+        $check = new class(['config_hints' => $hints]) extends PreflightCheck {
+            protected array $requiredConfig = [];
+
+            public function check(Result $result): Result
+            {
+                return $result->pass();
+            }
+
+            // For testing
+            public function getConfigHints()
+            {
+                return $this->configHints;
+            }
+        };
+
+        $this->assertEquals($hints, $check->getConfigHints());
+    }
 }

@@ -7,10 +7,7 @@ use Illuminate\Support\Facades\Redis as RedisFacade;
 class Redis extends PreflightCheck
 {
     protected array $requiredConfig = [
-        'database.redis.default',
-        'database.redis.default.host',
-        'database.redis.default.password',
-        'database.redis.default.port',
+        // @see boot()
     ];
 
     /**
@@ -21,13 +18,13 @@ class Redis extends PreflightCheck
     public function check(Result $result): Result
     {
         try {
-            $connection = RedisFacade::connection();
+            $connection = RedisFacade::connection($this->getConnection());
         } catch (\Exception $e) {
             return $result->fail($e->getMessage(), $e);
         }
 
         if (! $connection->client()->isConnected()) {
-            return $result->fail('Could not connect to Redis');
+            return $result->fail('Could not connect to Redis ('.$this->getConnection().')');
         }
         $info = $connection->client()->info();
 
@@ -38,5 +35,33 @@ class Redis extends PreflightCheck
                 'os' => $info['os'],
             ],
         ]);
+    }
+
+    /**
+     * Gets the DB connection to check (as specified in database.config).
+     */
+    protected function getConnection(): string
+    {
+        return $this->options['connection'] ?? 'default';
+    }
+
+    /**
+     * Boots the check
+     */
+    protected function boot(): void
+    {
+        $connection = $this->getConnection();
+        $usesAuth = $this->options['auth'] ?? true;
+
+        $this->requiredConfig = array_merge(
+            $this->requiredConfig,
+            [
+                "database.redis.${connection}.host",
+                "database.redis.${connection}.port",
+            ],
+            $usesAuth ? [
+                "database.redis.${connection}.password",
+            ] : []
+        );
     }
 }

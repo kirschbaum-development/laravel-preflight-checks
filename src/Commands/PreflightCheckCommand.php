@@ -91,7 +91,7 @@ class PreflightCheckCommand extends Command
      */
     protected function bootChecks()
     {
-        $environment = strtolower(App::environment());
+        $this->environment = $environment = strtolower(App::environment());
 
         try {
             if (! config()->has("preflight.checks.{$environment}")) {

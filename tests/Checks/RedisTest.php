@@ -14,12 +14,14 @@ class RedisTest extends BasePreflightCheckTest
 
     /**
      * @test
+     * @dataProvider providesConnectionScenarios
      */
-    public function testChecksRedisIsAccessible()
+    public function testChecksRedisIsAccessible($options, $expectedConnection)
     {
         $mockConnection = Mockery::mock(Connection::class);
         RedisFacade::shouldReceive('connection')
             ->once()
+            ->with($expectedConnection)
             ->andReturn($mockConnection);
 
         $connectionName = 'TestRedis';
@@ -31,7 +33,7 @@ class RedisTest extends BasePreflightCheckTest
         $mockConnection->shouldReceive('getName')->once()->andReturn($connectionName);
         $mockConnection->shouldReceive('client->info')->once()->andReturn($connectionInfo);
 
-        $preflightCheck = new $this->preflightCheckClass();
+        $preflightCheck = new $this->preflightCheckClass($options);
         $result = $preflightCheck->check(new Result('Test\Test'));
 
         $this->assertPassed($result);
@@ -39,6 +41,27 @@ class RedisTest extends BasePreflightCheckTest
         $this->assertEquals($connectionName, $resultData['name']);
         $this->assertEquals($connectionInfo['redis_version'], $resultData['info']['version']);
         $this->assertEquals($connectionInfo['os'], $resultData['info']['os']);
+    }
+
+    public function providesConnectionScenarios()
+    {
+        return [
+            'No options is default' => [
+                [], 'default',
+            ],
+            'Default is default' => [
+                [
+                    'connection' => 'default',
+                ],
+                'default',
+            ],
+            'Banana is banana' => [
+                [
+                    'connection' => 'banana',
+                ],
+                'banana',
+            ],
+        ];
     }
 
     /**
@@ -84,5 +107,18 @@ class RedisTest extends BasePreflightCheckTest
     public function testChecksConfigValues()
     {
         $this->checkConfigValues(new $this->preflightCheckClass());
+    }
+
+    /**
+     * @test
+     */
+    public function testDoesNotCheckPasswordForNoAuthConfig()
+    {
+        $check = new $this->preflightCheckClass(['auth' => false]);
+
+        $this->assertArrayNotHasKey(
+            'database.redis.default.password',
+            $this->getProtectedProperty($check, 'requiredConfig')
+        );
     }
 }

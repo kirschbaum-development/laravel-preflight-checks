@@ -55,7 +55,7 @@ abstract class BasePreflightCheckTest extends TestCase
         config([$configKey => null]);
 
         $configResult = $this->invokeMethod($preflightCheck, 'checkConfig', [new Result('Test\Config')]);
-        $this->assertTrue(in_array($configKey, $configResult->getRawData()));
+        $this->assertTrue(in_array($configKey, array_column($configResult->getRawData(), 'key')));
 
         config([$configKey => $originalValue]);
     }

@@ -38,7 +38,33 @@ class ConfigurationTest extends BasePreflightCheckTest
         $result = $preflightCheck->check(new Result('Test\Test'));
         $this->assertFailed($result);
         $data = $result->getRawData();
-        $this->assertTrue(in_array($config[0], $data));
-        $this->assertTrue(in_array($config[1], $data));
+        $foundKeys = array_column($data, 'key');
+        $this->assertTrue(in_array($config[0], $foundKeys));
+        $this->assertTrue(in_array($config[1], $foundKeys));
+    }
+
+    /**
+     * @test
+     */
+    public function testLoadsConfigHints()
+    {
+        $config = [
+            'test1' => uniqid('test1'),
+            'test2',
+        ];
+        $preflightCheck = new Configuration($config);
+
+        $result = $preflightCheck->check(new Result('Test\Test'));
+        $this->assertFailed($result);
+        $data = $result->getRawData();
+
+        // first key
+        $this->assertEquals('test1', $data[0]['key']);
+        $this->assertEquals($config['test1'], $data[0]['hint']);
+
+        // second key
+        $this->assertEquals('test2', $data[1]['key']);
+        // No hint set, so this is filtered out
+        $this->assertArrayNotHasKey('hint', $data[1]);
     }
 }

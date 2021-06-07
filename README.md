@@ -90,7 +90,9 @@ Checks that the database connection can be established, via the PDO, and that th
 
 Checks that Redis connection can be established, and that the required config keys are set.
 
-(No options)
+| Option | Description |
+| --- | --- |
+| `connection` | The name of the connection in `config/database.php` |)
 
 ### Configuration
 
@@ -109,6 +111,20 @@ The accepted options for the `Configuration` preflight check is a list of config
     ]
 ]
 ```
+
+You may also pass a hint (recommended for local development only) that will be shown if the key is not set. For example:
+
+```php
+'local' => [
+    Configuration::class => [
+        'services.payment.key' => 'In dashboard as "Super Secret API Token Key Thing"',
+        'services.mail.key',
+        // ...
+    ]
+]
+```
+
+When a new dev sets up their environment and is missing that config value, they will get that nice friendly message helping them find the key.
 
 ### Write Your Own!
 
