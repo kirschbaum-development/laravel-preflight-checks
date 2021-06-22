@@ -64,12 +64,13 @@ class PreflightCheckCommand extends Command
         $passed = $results->reduce(function ($carry, $result) use ($onlyFails) {
             $this->line(
                 sprintf(
-                    '[%s] %s: %s',
+                    '[%s]%s %s: %s',
                     $result->passed() ? 'PASS' : 'FAIL',
+                    $result->required() ? '' : ' (optional)',
                     $result->getName(),
                     $result->getMessage()
                 ),
-                $result->failed() ? 'error' : 'info',
+                $result->failed() ? ($result->required() ? 'error' : 'comment') : 'info',
                 ($onlyFails && $result->passed()) ? OutputInterface::VERBOSITY_VERBOSE : null
             );
             $this->line(
@@ -78,7 +79,7 @@ class PreflightCheckCommand extends Command
                 $result->failed() ? null : OutputInterface::VERBOSITY_VERBOSE
             );
 
-            return ($result->skipped())
+            return ($result->skipped() || ! $result->required())
                 ? $carry
                 : $carry && $result->passed();
         }, true);
