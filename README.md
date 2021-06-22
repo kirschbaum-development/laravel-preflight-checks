@@ -126,6 +126,8 @@ You may also pass a hint (recommended for local development only) that will be s
 
 When a new dev sets up their environment and is missing that config value, they will get that nice friendly message helping them find the key.
 
+You can also specify optional config values and provide a hint as well with the `OptionalConfiguration` class, which operates the same way, but does not cause the command to fail.
+
 ### Write Your Own!
 
 If you have a special startup consideration you'd like to make, feel free write your own check, extending `Kirschbaum\PreflightChecks\Checks\PreflightCheck`.
