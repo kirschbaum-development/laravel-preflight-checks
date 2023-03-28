@@ -1,6 +1,6 @@
 # Laravel Preflight Checks
 
-![Laravel Supported Versions](https://img.shields.io/badge/laravel-6.x/7.x/8.x/9.x-green.svg)
+![Laravel Supported Versions](https://img.shields.io/badge/laravel-6.x/7.x/8.x/9.x/10.x-green.svg)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 
 Performs pre-flight checks to ensure configuration and setup for deployment or development.
