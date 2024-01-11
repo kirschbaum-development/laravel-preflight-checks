@@ -56,11 +56,11 @@ class Redis extends PreflightCheck
         $this->requiredConfig = array_merge(
             $this->requiredConfig,
             [
-                "database.redis.${connection}.host",
-                "database.redis.${connection}.port",
+                "database.redis.{$connection}.host",
+                "database.redis.{$connection}.port",
             ],
             $usesAuth ? [
-                "database.redis.${connection}.password",
+                "database.redis.{$connection}.password",
             ] : []
         );
     }

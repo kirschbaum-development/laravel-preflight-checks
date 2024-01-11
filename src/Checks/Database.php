@@ -29,12 +29,12 @@ class Database extends PreflightCheck
         $attributes = [];
 
         foreach (['CLIENT_VERSION', 'CONNECTION_STATUS', 'SERVER_INFO', 'SERVER_VERSION'] as $attribute) {
-            $attributes[$attribute] = $pdo->getAttribute(constant("PDO::ATTR_${attribute}"));
+            $attributes[$attribute] = $pdo->getAttribute(constant("PDO::ATTR_{$attribute}"));
         }
 
         $connection = $this->getConnection();
 
-        return $result->pass("Connected to DB (Connection: ${connection})", $attributes);
+        return $result->pass("Connected to DB (Connection: {$connection})", $attributes);
     }
 
     /**
@@ -46,11 +46,11 @@ class Database extends PreflightCheck
         $this->requiredConfig = array_merge(
             $this->requiredConfig,
             [
-                "database.connections.${connection}.host",
-                "database.connections.${connection}.port",
-                "database.connections.${connection}.database",
-                "database.connections.${connection}.username",
-                "database.connections.${connection}.password",
+                "database.connections.{$connection}.host",
+                "database.connections.{$connection}.port",
+                "database.connections.{$connection}.database",
+                "database.connections.{$connection}.username",
+                "database.connections.{$connection}.password",
             ]
         );
     }
