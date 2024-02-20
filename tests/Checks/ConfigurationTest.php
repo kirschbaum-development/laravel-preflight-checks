@@ -30,6 +30,19 @@ class ConfigurationTest extends BasePreflightCheckTest
     /**
      * @test
      */
+    public function testPassesWhenConfigIsBooleanAndSetToFalse()
+    {
+        $config = ['test1' => false];
+        config($config);
+        $preflightCheck = new Configuration(array_keys($config));
+
+        $result = $preflightCheck->check(new Result('Test\Test'));
+        $this->assertPassed($result);
+    }
+
+    /**
+     * @test
+     */
     public function testFailsWhenConfigIsNotSet()
     {
         $config = ['test1', 'test2'];

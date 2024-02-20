@@ -123,7 +123,9 @@ abstract class PreflightCheck
         $missingKeys = [];
 
         foreach ($this->requiredConfig as $configKey) {
-            if (! config()->has($configKey) || empty(config($configKey))) {
+            $configValue = config($configKey);
+
+            if (! is_bool($configValue) && empty($configValue)) {
                 $missingKeys[] = $configKey;
             }
         }
