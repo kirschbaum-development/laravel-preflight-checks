@@ -2,13 +2,13 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
-use Kirschbaum\PreflightChecks\Checks\PreflightCheck;
+use Orchestra\Testbench\TestCase;
 use Kirschbaum\PreflightChecks\Checks\Result;
+use Kirschbaum\PreflightChecks\Checks\PreflightCheck;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
 use Kirschbaum\PreflightChecks\Tests\Helpers\CanAccessProtected;
-use Orchestra\Testbench\TestCase;
 
-abstract class BasePreflightCheckTest extends TestCase
+abstract class BasePreflightCheck extends TestCase
 {
     use CanAccessProtected;
 
@@ -16,11 +16,6 @@ abstract class BasePreflightCheckTest extends TestCase
      * @psalm-var class-string
      */
     protected $preflightCheckClass;
-
-    protected function getPackageProviders($app)
-    {
-        return [PreflightChecksServiceProvider::class];
-    }
 
     public function checkConfigValues(PreflightCheck $preflightCheck)
     {
@@ -34,6 +29,11 @@ abstract class BasePreflightCheckTest extends TestCase
         foreach ($config as $configKey) {
             $this->assertConfigKeyChecked($preflightCheck, $configKey);
         }
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [PreflightChecksServiceProvider::class];
     }
 
     protected function assertPassed(Result $result): void

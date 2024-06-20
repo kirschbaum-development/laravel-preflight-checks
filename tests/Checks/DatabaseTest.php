@@ -11,7 +11,7 @@ use Doctrine\DBAL\Driver\PDOConnection;
 use Kirschbaum\PreflightChecks\Checks\Result;
 use Kirschbaum\PreflightChecks\Checks\Database;
 
-class DatabaseTest extends BasePreflightCheckTest
+class DatabaseTest extends BasePreflightCheck
 {
     private const TEST_DEFAULT_DB_CONNECTION = 'test_default';
 

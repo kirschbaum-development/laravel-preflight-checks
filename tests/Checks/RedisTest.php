@@ -8,7 +8,7 @@ use Kirschbaum\PreflightChecks\Checks\Redis;
 use Kirschbaum\PreflightChecks\Checks\Result;
 use Illuminate\Support\Facades\Redis as RedisFacade;
 
-class RedisTest extends BasePreflightCheckTest
+class RedisTest extends BasePreflightCheck
 {
     protected $preflightCheckClass = Redis::class;
 
