@@ -9,15 +9,20 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Victor Leite",
+            "email": "victor@kirschbaumdevelopment.com",
+            "role": "Developer"
+        },
+        {
             "name": "Zack Teska",
-            "email": "zack@kirschbaumdevelopment.com",
+            "email": "hello@kirschbaumdevelopment.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
-        "illuminate/pipeline": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0"
+        "php": "^8.0",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/pipeline": "^8.0|^9.0|^10.0|^11.0"
     },
     "require-dev": {
         "doctrine/dbal": "^2.0",
