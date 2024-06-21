@@ -68,7 +68,7 @@ class DatabaseTest extends BasePreflightCheck
         ];
 
         yield 'Default checks default' => [
-            ['connection' => static::TEST_DEFAULT_DB_CONNECTION],
+            ['connection' => static::TEST_DEFAULT_DB_CONNECTION, 'driver' => 'sqlite', 'database' => ':memory:'],
             static::TEST_DEFAULT_DB_CONNECTION,
         ];
 
