@@ -3,7 +3,6 @@
 namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
 use Orchestra\Testbench\TestCase;
-use Illuminate\Contracts\Config\Repository;
 use Kirschbaum\PreflightChecks\Checks\Result;
 use Kirschbaum\PreflightChecks\Checks\PreflightCheck;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
@@ -17,24 +16,6 @@ abstract class BasePreflightCheck extends TestCase
      * @psalm-var class-string
      */
     protected $preflightCheckClass;
-
-    /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
-     */
-    protected function defineEnvironment($app)
-    {
-        // Setup default database to use sqlite :memory:
-        tap($app['config'], function (Repository $config) {
-            $config->set('database.connections.test_default', [
-                'driver'   => 'sqlite',
-                'database' => ':memory:',
-                'prefix'   => '',
-            ]);
-        });
-    }
 
     public function checkConfigValues(PreflightCheck $preflightCheck)
     {

@@ -22,6 +22,13 @@ class DatabaseTest extends BasePreflightCheck
         parent::setUp();
 
         config(['database.default' => static::TEST_DEFAULT_DB_CONNECTION]);
+        config([
+            'database.connections.' . static::TEST_DEFAULT_DB_CONNECTION => [
+                'driver' => 'sqlite',
+                'database' => ':memory:',
+                'prefix' => '',
+            ],
+        ]);
     }
 
     /**
@@ -68,7 +75,7 @@ class DatabaseTest extends BasePreflightCheck
         ];
 
         yield 'Default checks default' => [
-            ['connection' => static::TEST_DEFAULT_DB_CONNECTION, 'driver' => 'sqlite', 'database' => ':memory:'],
+            ['connection' => static::TEST_DEFAULT_DB_CONNECTION],
             static::TEST_DEFAULT_DB_CONNECTION,
         ];
 
