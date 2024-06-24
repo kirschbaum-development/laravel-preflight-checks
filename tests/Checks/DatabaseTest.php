@@ -2,26 +2,33 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
+use PDO;
+use Mockery;
+use PDOException;
+use Illuminate\Support\Facades\DB;
 use Doctrine\DBAL\Driver\PDO\Exception;
 use Doctrine\DBAL\Driver\PDOConnection;
-use Illuminate\Support\Facades\DB;
-use Kirschbaum\PreflightChecks\Checks\Database;
 use Kirschbaum\PreflightChecks\Checks\Result;
-use Mockery;
-use PDO;
-use PDOException;
+use Kirschbaum\PreflightChecks\Checks\Database;
 
-class DatabaseTest extends BasePreflightCheckTest
+class DatabaseTest extends BasePreflightCheck
 {
-    protected $preflightCheckClass = Database::class;
-
     private const TEST_DEFAULT_DB_CONNECTION = 'test_default';
+
+    protected $preflightCheckClass = Database::class;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         config(['database.default' => static::TEST_DEFAULT_DB_CONNECTION]);
+        config([
+            'database.connections.' . static::TEST_DEFAULT_DB_CONNECTION => [
+                'driver' => 'sqlite',
+                'database' => ':memory:',
+                'prefix' => '',
+            ],
+        ]);
     }
 
     /**
@@ -55,7 +62,7 @@ class DatabaseTest extends BasePreflightCheckTest
         $this->assertPassed($result);
     }
 
-    public function providesDatabaseScenarios()
+    public static function providesDatabaseScenarios()
     {
         yield 'No options checks default' => [
             null,
@@ -72,7 +79,7 @@ class DatabaseTest extends BasePreflightCheckTest
             static::TEST_DEFAULT_DB_CONNECTION,
         ];
 
-        $testConnection = 'test_connection_'.mt_rand(100, 99999);
+        $testConnection = 'test_connection_' . mt_rand(100, 99999);
 
         yield 'Connection checks connection' => [
             ['connection' => $testConnection],
@@ -92,7 +99,7 @@ class DatabaseTest extends BasePreflightCheckTest
                 Mockery::mock(Connection::class)
                     ->shouldReceive('getPdo')
                     ->once()
-                    ->andThrow(new Exception(Mockery::mock(PDOException::class)))
+                    ->andThrow(new Exception(PDOException::class))
                     ->getMock()
             );
 

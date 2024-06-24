@@ -2,25 +2,20 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Commands;
 
+use Mockery;
 use Illuminate\Config\Repository;
+use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Facades\App;
-use Kirschbaum\PreflightChecks\Checks\Exceptions\NoPreflightChecksDefinedException;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\FailedCheck;
-use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\OptionsCheck;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\PassedCheck;
+use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\OptionsCheck;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\SkippedCheck;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\SkippedFailedCheck;
-use Mockery;
-use Orchestra\Testbench\TestCase;
+use Kirschbaum\PreflightChecks\Checks\Exceptions\NoPreflightChecksDefinedException;
 
 class PreflightCheckCommandTest extends TestCase
 {
-    protected function getPackageProviders($app)
-    {
-        return [PreflightChecksServiceProvider::class];
-    }
-
     /**
      * @test
      * @dataProvider providesCommandScenarios
@@ -35,7 +30,7 @@ class PreflightCheckCommandTest extends TestCase
             ->assertExitCode($expectedExitCode);
     }
 
-    public function providesCommandScenarios()
+    public static function providesCommandScenarios()
     {
         return [
             'Passes with no checks' => [
@@ -128,5 +123,10 @@ class PreflightCheckCommandTest extends TestCase
         // No exception thrown
         $this->artisan('preflight:check')
             ->assertExitCode(0);
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [PreflightChecksServiceProvider::class];
     }
 }

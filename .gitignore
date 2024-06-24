@@ -5,3 +5,4 @@
 build/*
 composer.lock
 vendor/
+.phpunit.cache

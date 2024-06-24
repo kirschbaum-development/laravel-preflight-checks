@@ -2,10 +2,10 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
-use Kirschbaum\PreflightChecks\Checks\Configuration;
 use Kirschbaum\PreflightChecks\Checks\Result;
+use Kirschbaum\PreflightChecks\Checks\Configuration;
 
-class ConfigurationTest extends BasePreflightCheckTest
+class ConfigurationTest extends BasePreflightCheck
 {
     protected $preflightCheckClass = Configuration::class;
 

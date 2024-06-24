@@ -2,19 +2,22 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
+use Mockery;
 use Illuminate\Redis\Connections\Connection;
-use Illuminate\Support\Facades\Redis as RedisFacade;
 use Kirschbaum\PreflightChecks\Checks\Redis;
 use Kirschbaum\PreflightChecks\Checks\Result;
-use Mockery;
+use Illuminate\Support\Facades\Redis as RedisFacade;
 
-class RedisTest extends BasePreflightCheckTest
+class RedisTest extends BasePreflightCheck
 {
     protected $preflightCheckClass = Redis::class;
 
     /**
      * @test
      * @dataProvider providesConnectionScenarios
+     *
+     * @param mixed $options
+     * @param mixed $expectedConnection
      */
     public function testChecksRedisIsAccessible($options, $expectedConnection)
     {
@@ -43,7 +46,7 @@ class RedisTest extends BasePreflightCheckTest
         $this->assertEquals($connectionInfo['os'], $resultData['info']['os']);
     }
 
-    public function providesConnectionScenarios()
+    public static function providesConnectionScenarios()
     {
         return [
             'No options is default' => [
