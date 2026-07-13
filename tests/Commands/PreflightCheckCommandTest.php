@@ -35,7 +35,7 @@ class PreflightCheckCommandTest extends TestCase
             ->assertExitCode($expectedExitCode);
     }
 
-    public function providesCommandScenarios()
+    public static function providesCommandScenarios()
     {
         return [
             'Passes with no checks' => [

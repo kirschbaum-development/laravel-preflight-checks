@@ -2,8 +2,8 @@
 
 namespace Kirschbaum\PreflightChecks\Checks;
 
-use Doctrine\DBAL\Driver\PDO\Exception;
 use Illuminate\Support\Facades\DB;
+use PDOException;
 
 class Database extends PreflightCheck
 {
@@ -20,7 +20,7 @@ class Database extends PreflightCheck
     {
         try {
             $pdo = DB::connection($this->getConnection())->getPdo();
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             return $result->fail($e->getMessage(), $e);
         } catch (\Exception $e) {
             return $result->fail('General failure: ' . $e->getMessage(), $e);

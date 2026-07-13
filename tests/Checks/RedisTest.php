@@ -43,7 +43,7 @@ class RedisTest extends BasePreflightCheckTest
         $this->assertEquals($connectionInfo['os'], $resultData['info']['os']);
     }
 
-    public function providesConnectionScenarios()
+    public static function providesConnectionScenarios()
     {
         return [
             'No options is default' => [

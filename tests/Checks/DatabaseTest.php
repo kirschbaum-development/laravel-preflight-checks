@@ -2,8 +2,6 @@
 
 namespace Kirschbaum\PreflightChecks\Tests\Checks;
 
-use Doctrine\DBAL\Driver\PDO\Exception;
-use Doctrine\DBAL\Driver\PDOConnection;
 use Illuminate\Support\Facades\DB;
 use Kirschbaum\PreflightChecks\Checks\Database;
 use Kirschbaum\PreflightChecks\Checks\Result;
@@ -21,7 +19,13 @@ class DatabaseTest extends BasePreflightCheckTest
     {
         parent::setUp();
 
-        config(['database.default' => static::TEST_DEFAULT_DB_CONNECTION]);
+        config([
+            'database.default' => static::TEST_DEFAULT_DB_CONNECTION,
+            'database.connections.' . static::TEST_DEFAULT_DB_CONNECTION => [
+                'driver' => 'sqlite',
+                'database' => ':memory:',
+            ],
+        ]);
     }
 
     /**
@@ -30,7 +34,7 @@ class DatabaseTest extends BasePreflightCheckTest
      */
     public function testChecksDatabaseAccessible(?array $options, string $expectedConnection)
     {
-        $mockPdo = Mockery::mock(PDOConnection::class);
+        $mockPdo = Mockery::mock(PDO::class);
         DB::shouldReceive('connection')
             ->once()
             ->with($expectedConnection)
@@ -55,7 +59,7 @@ class DatabaseTest extends BasePreflightCheckTest
         $this->assertPassed($result);
     }
 
-    public function providesDatabaseScenarios()
+    public static function providesDatabaseScenarios()
     {
         yield 'No options checks default' => [
             null,
@@ -92,7 +96,7 @@ class DatabaseTest extends BasePreflightCheckTest
                 Mockery::mock(Connection::class)
                     ->shouldReceive('getPdo')
                     ->once()
-                    ->andThrow(new Exception(Mockery::mock(PDOException::class)))
+                    ->andThrow(new PDOException('Could not connect to the database.'))
                     ->getMock()
             );
 
