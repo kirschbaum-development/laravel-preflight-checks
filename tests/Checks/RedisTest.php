@@ -6,6 +6,7 @@ use Mockery;
 use Illuminate\Redis\Connections\Connection;
 use Kirschbaum\PreflightChecks\Checks\Redis;
 use Kirschbaum\PreflightChecks\Checks\Result;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Illuminate\Support\Facades\Redis as RedisFacade;
 
 class RedisTest extends BasePreflightCheck
@@ -19,6 +20,7 @@ class RedisTest extends BasePreflightCheck
      * @param mixed $options
      * @param mixed $expectedConnection
      */
+    #[DataProvider('providesConnectionScenarios')]
     public function testChecksRedisIsAccessible($options, $expectedConnection)
     {
         $mockConnection = Mockery::mock(Connection::class);
