@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Doctrine\DBAL\Driver\PDO\Exception;
 use Doctrine\DBAL\Driver\PDOConnection;
 use Kirschbaum\PreflightChecks\Checks\Result;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Kirschbaum\PreflightChecks\Checks\Database;
 
 class DatabaseTest extends BasePreflightCheck
@@ -35,6 +36,7 @@ class DatabaseTest extends BasePreflightCheck
      * @test
      * @dataProvider providesDatabaseScenarios
      */
+    #[DataProvider('providesDatabaseScenarios')]
     public function testChecksDatabaseAccessible(?array $options, string $expectedConnection)
     {
         $mockPdo = Mockery::mock(PDOConnection::class);
@@ -112,6 +114,7 @@ class DatabaseTest extends BasePreflightCheck
      * @test
      * @dataProvider providesDatabaseScenarios
      */
+    #[DataProvider('providesDatabaseScenarios')]
     public function testChecksConfigValues(?array $options, string $expectedConnection)
     {
         $preflight = is_null($options) ? new $this->preflightCheckClass : new $this->preflightCheckClass($options);

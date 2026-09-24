@@ -6,6 +6,7 @@ use Mockery;
 use Illuminate\Config\Repository;
 use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Facades\App;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Kirschbaum\PreflightChecks\PreflightChecksServiceProvider;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\FailedCheck;
 use Kirschbaum\PreflightChecks\Tests\Checks\Fixtures\PassedCheck;
@@ -20,6 +21,7 @@ class PreflightCheckCommandTest extends TestCase
      * @test
      * @dataProvider providesCommandScenarios
      */
+    #[DataProvider('providesCommandScenarios')]
     public function testPerformsPreflightChecks(array $config, int $expectedExitCode)
     {
         App::detectEnvironment(fn () => 'banana');
